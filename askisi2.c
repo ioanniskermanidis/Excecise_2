@@ -26,19 +26,29 @@ void searchContact(contact* contacts, int contactCounter);
 void updateContact(contact* contacts, int contactCounter);
 void deleteContact(contact* contacts, int contactCounter);
 void exitEnv(char* filename,contact* contacts, int contactCounter);
+contact* addContact(contact* contacts, int* ptr_contactCounter);
+
 int main()
 {
 	
 	char filename[]="contacts.txt";
 	contact* contacts=loadContacts(filename);
 	int contactCounter= countContacts(filename);
-listContacts(contacts,contactCounter);
-	//searchContacts(contacts,contactCounter);
-	exitEnv(filename,contacts,contactCounter);
-	updateContact(contacts,contactCounter);
+	
+	
+	printf("--------------------------------------------------------------------------\n");
+	printf("|                         CONTACTS MANAGEMENT                            |\n");
+	printf("--------------------------------------------------------------------------\n\n");
+	
+	printf(" 1.Add New Contact\n 2.Search Contact\n 3.Update Contact\n");
 	
 	listContacts(contacts,contactCounter);
-	saveTxt(filename,contacts,contactCounter);
+	//searchContacts(contacts,contactCounter);
+	//exitEnv(filename,contacts,contactCounter);
+	//updateContact(contacts,contactCounter);
+	contacts = addContact(contacts, &contactCounter);
+	listContacts(contacts,contactCounter);
+	//saveTxt(filename,contacts,contactCounter);
 	
 	
 return 0;	
@@ -95,6 +105,23 @@ void saveTxt(char* filename,contact* contacts, int contactCounter)
 }
 
 /* -------------------------------------------------------*/
+
+contact* addContact(contact* contacts, int* ptr_contactCounter){
+	(*ptr_contactCounter)++; 
+	contacts = realloc(contacts, *ptr_contactCounter * sizeof(contacts));
+	puts("--> Add New Contact");
+	printf(" Name: ");
+	scanf("%s", contacts[*ptr_contactCounter - 1].name);
+	printf(" Address: ");
+	scanf("%s", contacts[*ptr_contactCounter - 1].address);
+	printf(" Gender: ");
+	scanf("%s", contacts[*ptr_contactCounter - 1].gender);
+	printf(" Email: ");
+	scanf("%s", contacts[*ptr_contactCounter - 1].email);
+	printf(" Phone: ");
+	scanf("%s", contacts[*ptr_contactCounter - 1].phone);
+	return contacts;
+}
 
 void listContacts(contact* contacts, int contactCounter)
 {
