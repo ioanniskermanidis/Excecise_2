@@ -82,17 +82,17 @@ int main()
 
 void printTitle(){
     //system("cls");
-	printf("--------------------------------------------------------------------------\n");
-	printf("|                         CONTACTS MANAGEMENT                            |\n");
-	printf("--------------------------------------------------------------------------\n\n");
+	printf(" --------------------------------------------------------------------------\n");
+	printf(" |                         CONTACTS MANAGEMENT                            |\n");
+	printf(" --------------------------------------------------------------------------\n\n");
 
 }
 
 void printContact(contact entry)
 {
 	puts("----------------------------------");
-	printf(" Name: %s\n Address: %s\n Gender: %s\n Email: %s\n Phone: %s\n\n", entry.name, entry.address, entry.gender, entry.email, entry.phone);
-	puts("----------------------------------");
+	printf(" Name: %s\n Address: %s\n Gender: %s\n Email: %s\n Phone: %s\n", entry.name, entry.address, entry.gender, entry.email, entry.phone);
+	puts("----------------------------------\n");
 }
 int countContacts(char* filename)
 {
@@ -140,6 +140,7 @@ void saveTxt(char* filename,contact* contacts, int contactCounter)
 
 contact* addContact(contact* contacts, int* ptr_contactCounter){
 	printTitle();
+	printf("-->Add Contact\n\n");
 	(*ptr_contactCounter)++;
 	int contactCounter = *ptr_contactCounter;
 	contacts = realloc(contacts, contactCounter * sizeof(contacts));
@@ -156,12 +157,14 @@ contact* addContact(contact* contacts, int* ptr_contactCounter){
 	scanf("%s", contacts[contactCounter - 1].email);
 	printf(" Phone: ");
 	scanf("%s", contacts[contactCounter - 1].phone);
+	printf("\nNew entry added!\n");
 	return contacts;
 }
 
 void listContacts(contact* contacts, int contactCounter)
 {
 	printTitle();
+	printf("-->List Contact\n\n");
 	int i;
     int countPrinted = 0;
 	for (i=0; i<contactCounter; i++)
@@ -177,6 +180,7 @@ void listContacts(contact* contacts, int contactCounter)
 void searchContact(contact* contacts, int contactCounter)
 {
 	printTitle();
+	printf("-->Search Contact\n\n");
 	char name[100];
 	printf("Enter contact name:");
 	scanf("%s", name);
@@ -195,6 +199,7 @@ void searchContact(contact* contacts, int contactCounter)
 void updateContact(contact* contacts, int contactCounter)
 {
 	printTitle();
+	printf("-->Update Contact\n\n");
 	char name[100];
 	printf("Enter contact name:");
 	scanf("%s", name);
@@ -219,6 +224,7 @@ void updateContact(contact* contacts, int contactCounter)
 void deleteContact(contact* contacts, int contactCounter)
 {
 	printTitle();
+	printf("-->Delete Contact\n\n");
 	char name[100];
 	printf("Enter contact name:");
 	scanf("%s", name);
