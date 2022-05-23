@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+
 struct contact
 {
 	char name[100];
@@ -13,6 +14,8 @@ struct contact
 };
 
 typedef struct contact contact;
+
+void printTitle();
 
 void printContact(contact entry);
 int countContacts(char* filename);
@@ -34,32 +37,62 @@ int main()
 	char filename[]="contacts.txt";
 	contact* contacts=loadContacts(filename);
 	int contactCounter= countContacts(filename);
+	while(1)
+	{
+	printTitle();
+	printf(" 1.Add New Contact\n 2.Search Contact\n 3.Update Contact\n 4.Delete Contact\n 5.List Contacts\n 6.Exit\n ");
+	char choice;
+	choice=getch();
+	switch(choice){
+		case '1':
+			contacts = addContact(contacts, &contactCounter);
+			saveTxt(filename,contacts,contactCounter);
+			break;
+		case '2':
+			searchContact(contacts,contactCounter);
+			break;
+		case '3':
+			updateContact(contacts,contactCounter);
+			saveTxt(filename,contacts,contactCounter);
+			break;
+		case '4':
+			deleteContact(contacts, contactCounter);
+			saveTxt(filename,contacts,contactCounter);
+			break;	
+		case '5':
+			listContacts(contacts, contactCounter);
+			break;
+		case '6':
+			exitEnv(filename, contacts, contactCounter);
+			break;
+	}
+	printf("\n Press m for menu: ");
+	while(1){
+		choice = getch();
+		if(choice=='m') break;
+	}
 	
+	}
 	
-	printf("--------------------------------------------------------------------------\n");
-	printf("|                         CONTACTS MANAGEMENT                            |\n");
-	printf("--------------------------------------------------------------------------\n\n");
-	
-	printf(" 1.Add New Contact\n 2.Search Contact\n 3.Update Contact\n");
-	
-	listContacts(contacts,contactCounter);
-	//searchContacts(contacts,contactCounter);
-	//exitEnv(filename,contacts,contactCounter);
-	//updateContact(contacts,contactCounter);
-	contacts = addContact(contacts, &contactCounter);
-	listContacts(contacts,contactCounter);
-	//saveTxt(filename,contacts,contactCounter);
-	
-	
-return 0;	
+	return 0;
 }
 
 
 //Functions
 
+void printTitle(){
+	system("cls");
+	printf("--------------------------------------------------------------------------\n");
+	printf("|                         CONTACTS MANAGEMENT                            |\n");
+	printf("--------------------------------------------------------------------------\n\n");
+	
+}
+
 void printContact(contact entry)
 {
-printf(" Name: %s\n Address: %s\n Gender: %s\n Email: %s\n Phone: %s\n\n", entry.name, entry.address, entry.gender, entry.email, entry.phone);	
+	puts("----------------------------------");
+	printf(" Name: %s\n Address: %s\n Gender: %s\n Email: %s\n Phone: %s\n\n", entry.name, entry.address, entry.gender, entry.email, entry.phone);	
+	puts("----------------------------------");
 }
 int countContacts(char* filename)
 {
@@ -107,6 +140,7 @@ void saveTxt(char* filename,contact* contacts, int contactCounter)
 /* -------------------------------------------------------*/
 
 contact* addContact(contact* contacts, int* ptr_contactCounter){
+	printTitle();
 	(*ptr_contactCounter)++; 
 	contacts = realloc(contacts, *ptr_contactCounter * sizeof(contacts));
 	puts("--> Add New Contact");
@@ -125,16 +159,18 @@ contact* addContact(contact* contacts, int* ptr_contactCounter){
 
 void listContacts(contact* contacts, int contactCounter)
 {
+	printTitle();
 	int i;
 	for (i=0; i<contactCounter; i++)
 	{
 	printContact(contacts[i]);		
 	}
-	printf(" Number of records found: %d\n ", i);
+	printf(" Number of records found: %d\n", i);
 }
 
 void searchContact(contact* contacts, int contactCounter)
 {
+	printTitle();
 	char name[100];
 	printf("Enter contact name:");
 	scanf("%s", name);
@@ -152,6 +188,7 @@ void searchContact(contact* contacts, int contactCounter)
 
 void updateContact(contact* contacts, int contactCounter)
 {	
+	printTitle();
 	char name[100];
 	printf("Enter contact name:");
 	scanf("%s", name);
@@ -175,6 +212,7 @@ void updateContact(contact* contacts, int contactCounter)
 }
 void deleteContact(contact* contacts, int contactCounter)
 {
+	printTitle();
 	char name[100];
 	printf("Enter contact name:");
 	scanf("%s", name);
