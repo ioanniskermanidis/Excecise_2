@@ -33,7 +33,7 @@ contact* addContact(contact* contacts, int* ptr_contactCounter);
 
 int main()
 {
-	
+
 	char filename[]="contacts.txt";
 	contact* contacts=loadContacts(filename);
 	int contactCounter= countContacts(filename);
@@ -58,7 +58,7 @@ int main()
 		case '4':
 			deleteContact(contacts, contactCounter);
 			saveTxt(filename,contacts,contactCounter);
-			break;	
+			break;
 		case '5':
 			listContacts(contacts, contactCounter);
 			break;
@@ -66,14 +66,14 @@ int main()
 			exitEnv(filename, contacts, contactCounter);
 			break;
 	}
-	printf("\n Press m for menu: ");
+	printf("\n Press m for menu: \n");
 	while(1){
 		choice = getch();
 		if(choice=='m') break;
 	}
-	
+
 	}
-	
+
 	return 0;
 }
 
@@ -81,22 +81,22 @@ int main()
 //Functions
 
 void printTitle(){
-	system("cls");
+    //system("cls");
 	printf("--------------------------------------------------------------------------\n");
 	printf("|                         CONTACTS MANAGEMENT                            |\n");
 	printf("--------------------------------------------------------------------------\n\n");
-	
+
 }
 
 void printContact(contact entry)
 {
 	puts("----------------------------------");
-	printf(" Name: %s\n Address: %s\n Gender: %s\n Email: %s\n Phone: %s\n\n", entry.name, entry.address, entry.gender, entry.email, entry.phone);	
+	printf(" Name: %s\n Address: %s\n Gender: %s\n Email: %s\n Phone: %s\n\n", entry.name, entry.address, entry.gender, entry.email, entry.phone);
 	puts("----------------------------------");
 }
 int countContacts(char* filename)
 {
-	
+
 	FILE *file = fopen(filename,"r");
 	int i=0;
 	char line[1024];
@@ -112,7 +112,7 @@ void readContacts(char* filename,contact* contacts)
 	while(fgets(line,1024, file)){
 		contacts[i].deleted=0;
 		sscanf(line,  "%s %s %s %s %s" , contacts[i].name, contacts[i].address, contacts[i].gender, contacts[i].email, contacts[i].phone);
-		i++;	
+		i++;
 }
 fclose(file);
 }
@@ -134,26 +134,28 @@ void saveTxt(char* filename,contact* contacts, int contactCounter)
 		}
 	}
 	fclose(file);
-	printf("\n File saved successfully");
 }
 
 /* -------------------------------------------------------*/
 
 contact* addContact(contact* contacts, int* ptr_contactCounter){
 	printTitle();
-	(*ptr_contactCounter)++; 
-	contacts = realloc(contacts, *ptr_contactCounter * sizeof(contacts));
+	(*ptr_contactCounter)++;
+	int contactCounter = *ptr_contactCounter;
+	contacts = realloc(contacts, contactCounter * sizeof(contacts));
+
+	contacts[contactCounter- 1].deleted=0;
 	puts("--> Add New Contact");
 	printf(" Name: ");
-	scanf("%s", contacts[*ptr_contactCounter - 1].name);
+	scanf("%s", contacts[contactCounter - 1].name);
 	printf(" Address: ");
-	scanf("%s", contacts[*ptr_contactCounter - 1].address);
+	scanf("%s", contacts[contactCounter - 1].address);
 	printf(" Gender: ");
-	scanf("%s", contacts[*ptr_contactCounter - 1].gender);
+	scanf("%s", contacts[contactCounter - 1].gender);
 	printf(" Email: ");
-	scanf("%s", contacts[*ptr_contactCounter - 1].email);
+	scanf("%s", contacts[contactCounter - 1].email);
 	printf(" Phone: ");
-	scanf("%s", contacts[*ptr_contactCounter - 1].phone);
+	scanf("%s", contacts[contactCounter - 1].phone);
 	return contacts;
 }
 
@@ -161,11 +163,15 @@ void listContacts(contact* contacts, int contactCounter)
 {
 	printTitle();
 	int i;
+    int countPrinted = 0;
 	for (i=0; i<contactCounter; i++)
 	{
-	printContact(contacts[i]);		
+	if(contacts[i].deleted==0){
+            printContact(contacts[i]);
+            countPrinted++;
 	}
-	printf(" Number of records found: %d\n", i);
+	}
+	printf(" Number of records found: %d\n", countPrinted);
 }
 
 void searchContact(contact* contacts, int contactCounter)
@@ -187,7 +193,7 @@ void searchContact(contact* contacts, int contactCounter)
 }
 
 void updateContact(contact* contacts, int contactCounter)
-{	
+{
 	printTitle();
 	char name[100];
 	printf("Enter contact name:");
@@ -220,17 +226,18 @@ void deleteContact(contact* contacts, int contactCounter)
 	for ( i=0; i<contactCounter; i++)
 	{
 		if(strcmp(name,contacts[i].name)==0 && contacts[i].deleted==0)
-		{ 
+		{
 			contacts[i].deleted=1;
 			printf("Record deleted succesfully");
 			return;
 		}
 	}
 	printf(" Record NOT succesfully deleted- please enter a valid name");
-	
+
 }
 void exitEnv(char* filename,contact* contacts, int contactCounter)
 {
 	saveTxt(filename,contacts,contactCounter);
+    printf("\n File saved successfully");
 	exit(0);
 }
