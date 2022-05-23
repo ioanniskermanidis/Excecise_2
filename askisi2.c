@@ -1,8 +1,19 @@
+/* 
+	Omada Ergastiriou: B'
+			IOANNIS KERMANIDIS A' ETOS, AM: 1093654
+			Imerominia Syggrafis: 24/05/2022
+			
+			Skopos: 
+				Prokeitai gia diaxeirisi enos ilektronikou tilefwnikou katalogou me dinatotites:
+				1. prosthikis, 2. anazitisis, 3.epeksergasias , 4. diagrafis epafis kai 5. provolis olokliris tis listas epafwn*/
+
+
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-
+/*orizoume mia domi dedomenwn tin opoia tha xrisimopoioume gia na apothikeuoyme tis plirofories kathe epafis*/
 struct contact
 {
 	char name[100];
@@ -15,15 +26,18 @@ struct contact
 
 typedef struct contact contact;
 
-void printTitle();
 
-void printContact(contact entry);
-int countContacts(char* filename);
-void readContacts(char* filename,contact* contacts);
-contact* loadContacts(char* filename);
-void saveTxt(char* filename,contact* contacts, int contactCounter);
-//συναρτήσεις που υποχρεωτικά ζητούνται απο την εκφώνηση
+/* parakatw synartiseis einai EPIVOITHITIKES kai xrisimopoiountai mesa stis zitoumenes synartiseis*/
 
+void printTitle(); /* typonei ton titlo "Contact Management" sta apaitoumena shmeia*/
+void printContact(contact entry); /* dexetai os parametro mia epafi kai ektypwnei stin othoni tis antistoixes plirofories */
+int countContacts(char* filename); /* epistrefei ton aritho twn epafwn tou arxeiou */
+void readContacts(char* filename,contact* contacts); /* dexetai os orisma ton pinaka apo contact-structure kai ton symplirwnei me ta stoixeia ton epafwn tou arxeiou*/
+contact* loadContacts(char* filename); /* diavazei to arxeio, desmeuei dynamika mnimmi kai fortonei stin mnimi tis epafes */
+void saveTxt(char* filename,contact* contacts, int contactCounter); /* grafei ksana sto arxeio ta dedomena apo tin mnimi (eite added,updated,deleted) */
+
+/*oi parakatw einai  synartiseis pou zitontai YPOXREWTIKA apo tin ekfwnisi tis askisis*/
+/* i kathe sinartisi ektelei ton skopo pou anaferetai ston pinaka tis ekfonisis pou dothike*/
 void listContacts(contact* contacts, int contactCounter);
 void searchContact(contact* contacts, int contactCounter);
 void updateContact(contact* contacts, int contactCounter);
