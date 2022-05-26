@@ -1,9 +1,9 @@
-/* 
+/*
 	Omada Ergastiriou: B'
 			IOANNIS KERMANIDIS A' ETOS, AM: 1093654
 			Imerominia Syggrafis: 24/05/2022
-			
-			Skopos: 
+
+			Skopos:
 				Prokeitai gia diaxeirisi enos ilektronikou tilefwnikou katalogou me dinatotites:
 				1. prosthikis, 2. anazitisis, 3.epeksergasias , 4. diagrafis epafis kai 5. provolis olokliris tis listas epafwn*/
 
@@ -12,15 +12,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <conio.h>
 
 /*orizoume mia domi dedomenwn tin opoia tha xrisimopoioume gia na apothikeuoyme tis plirofories kathe epafis*/
 struct contact
 {
-	char name[100];
-	char address[100];
-	char gender[8];
-	char email[100];
-	char phone[10];
+	char name[100+1];
+	char address[100+1];
+	char gender[8+1];
+	char email[100+1];
+	char phone[10+1];
 	int deleted;
 };
 
@@ -95,7 +96,7 @@ int main()
 //Functions
 
 void printTitle(){
-    //system("cls");
+    system("cls");
 	printf(" --------------------------------------------------------------------------\n");
 	printf(" |                         CONTACTS MANAGEMENT                            |\n");
 	printf(" --------------------------------------------------------------------------\n\n");
@@ -157,7 +158,7 @@ contact* addContact(contact* contacts, int* ptr_contactCounter){
 	printf("-->Add Contact\n\n");
 	(*ptr_contactCounter)++;
 	int contactCounter = *ptr_contactCounter;
-	contacts = realloc(contacts, contactCounter * sizeof(contacts));
+	contacts = realloc(contacts, contactCounter * sizeof(contact));
 
 	contacts[contactCounter- 1].deleted=0;
 	puts("--> Add New Contact");
