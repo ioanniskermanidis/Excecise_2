@@ -57,6 +57,7 @@ int main()
 	printTitle();
 	printf(" 1.Add New Contact\n 2.Search Contact\n 3.Update Contact\n 4.Delete Contact\n 5.List Contacts\n 6.Exit\n");
 	char choice;
+	printf("\n Input Choice (1-6): ");
 	choice=getch();
 	switch(choice){
 		case '1':
@@ -161,7 +162,7 @@ contact* addContact(contact* contacts, int* ptr_contactCounter){
 	contacts = realloc(contacts, contactCounter * sizeof(contact));
 
 	contacts[contactCounter- 1].deleted=0;
-	puts("--> Add New Contact");
+	puts(" New Contact:\n");
 	printf(" Name: ");
 	scanf("%s", contacts[contactCounter - 1].name);
 	printf(" Address: ");
@@ -179,7 +180,7 @@ contact* addContact(contact* contacts, int* ptr_contactCounter){
 void listContacts(contact* contacts, int contactCounter)
 {
 	printTitle();
-	printf("-->List Contact\n\n");
+	printf("-->List Contacts\n\n");
 	int i;
     int countPrinted = 0;
 	for (i=0; i<contactCounter; i++)
@@ -203,12 +204,12 @@ void searchContact(contact* contacts, int contactCounter)
 	for ( i=0; i<contactCounter; i++){
 		if(strcmp(name,contacts[i].name)==0 && contacts[i].deleted==0)
 		{
-			printf(" Record found\n");
+			printf("\n Record found\n");
 			printContact(contacts[i]);
 			return;
 		}
 	}
-	printf(" Record not found\n");
+	printf("\n Record not found\n");
 }
 
 void updateContact(contact* contacts, int contactCounter)
@@ -216,21 +217,21 @@ void updateContact(contact* contacts, int contactCounter)
 	printTitle();
 	printf("-->Update Contact\n\n");
 	char name[100];
-	printf("Enter contact name:");
+	printf("Enter contact name: ");
 	scanf("%s", name);
 	int i=0;
 	for ( i=0; i<contactCounter; i++){
 		if(strcmp(name,contacts[i].name)==0 && contacts[i].deleted==0)
 		{
-			printf("Enter new address:");
+			printf("Enter new address: ");
 			scanf("%s", contacts[i].address);
-			printf("Enter gender:");
+			printf("Enter gender: ");
 			scanf("%s", contacts[i].gender);
-			printf("Enter new email:");
+			printf("Enter new email: ");
 			scanf("%s", contacts[i].email);
-			printf("Enter new phone nubmer:");
+			printf("Enter new phone nubmer: ");
 			scanf("%s", contacts[i].phone);
-			printf("\n Selected entry updated!");
+			printf("\n Selected entry updated!\n");
 			return;
 		}
 	}
@@ -241,7 +242,7 @@ void deleteContact(contact* contacts, int contactCounter)
 	printTitle();
 	printf("-->Delete Contact\n\n");
 	char name[100];
-	printf(" Enter contact name:");
+	printf(" Enter contact name: ");
 	scanf("%s", name);
 	int i=0;
 	for ( i=0; i<contactCounter; i++)
@@ -249,16 +250,16 @@ void deleteContact(contact* contacts, int contactCounter)
 		if(strcmp(name,contacts[i].name)==0 && contacts[i].deleted==0)
 		{
 			contacts[i].deleted=1;
-			printf(" Record deleted succesfully");
+			printf("\n Record deleted succesfully\n");
 			return;
 		}
 	}
-	printf(" Record NOT succesfully deleted- please enter a valid name");
+	printf("\n Record NOT succesfully deleted- please enter a valid name\n");
 
 }
 void exitEnv(char* filename,contact* contacts, int contactCounter)
 {
 	saveTxt(filename,contacts,contactCounter);
-    printf("\n File saved successfully");
+    printf("\n File saved successfully\n");
 	exit(0);
 }
