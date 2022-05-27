@@ -135,13 +135,15 @@ fclose(file);
 contact* loadContacts(char* filename)
 {
 	int linecounter= countContacts(filename);
+
+	/*aksiopoiw to return tis countContacts wste na desmeysw antistoixa mnimi meso tis malloc gia to struct kathe epafis */
 	contact* contacts=malloc(linecounter*sizeof(contact));
 	readContacts(filename, contacts);
 	return contacts;
 }
 void saveTxt(char* filename,contact* contacts, int contactCounter)
 {
-	FILE *file = fopen(filename,"w");
+	FILE *file = fopen(filename,"w"); /* apothikeyw me tin morfi pou zititai tis epafes apo tin mnimi sto .txt (overwrite) */
 	int i=0;
 	for (i=0; i<contactCounter; i++){
 		if(contacts[i].deleted==0)
@@ -157,9 +159,10 @@ void saveTxt(char* filename,contact* contacts, int contactCounter)
 contact* addContact(contact* contacts, int* ptr_contactCounter){
 	printTitle();
 	printf("-->Add Contact\n\n");
-	(*ptr_contactCounter)++;
+	/* parakatw auksanw stin dieuthinsi tou deikti contactCounter monina tin timi tou "arithmou twn epafwn" kai to aksiopoiw stin realloc katallila */
+	(*ptr_contactCounter)++; 
 	int contactCounter = *ptr_contactCounter;
-	contacts = realloc(contacts, contactCounter * sizeof(contact));
+	contacts = realloc(contacts, contactCounter*sizeof(contact));
 
 	contacts[contactCounter- 1].deleted=0;
 	puts(" New Contact:\n");
@@ -182,7 +185,7 @@ void listContacts(contact* contacts, int contactCounter)
 	printTitle();
 	printf("-->List Contacts\n\n");
 	int i;
-    int countPrinted = 0;
+    int countPrinted = 0;	
 	for (i=0; i<contactCounter; i++)
 	{
 	if(contacts[i].deleted==0){
@@ -221,7 +224,9 @@ void updateContact(contact* contacts, int contactCounter)
 	scanf("%s", name);
 	int i=0;
 	for ( i=0; i<contactCounter; i++){
-		if(strcmp(name,contacts[i].name)==0 && contacts[i].deleted==0)
+		if(strcmp(name,contacts[i].name)==0 && contacts[i].deleted==0) 
+		/* PARAPANO ekteleitai logikos elegxos gia to an yparxei i epafi me to dosmeno onoma oste na proxorisei h synartisi update
+		o elegxos contacts[i].deleted==0 ginetai wste na apoklisthoun epafew oi opoies diagrafthkan kata tin ektelesi tou programmatos*/
 		{
 			printf("Enter new address: ");
 			scanf("%s", contacts[i].address);
@@ -247,7 +252,7 @@ void deleteContact(contact* contacts, int contactCounter)
 	int i=0;
 	for ( i=0; i<contactCounter; i++)
 	{
-		if(strcmp(name,contacts[i].name)==0 && contacts[i].deleted==0)
+		if(strcmp(name,contacts[i].name)==0 && contacts[i].deleted==0) /* ginetai elegxos gia ton idio skopo pou eksigithike stin synartisi update*/
 		{
 			contacts[i].deleted=1;
 			printf("\n Record deleted succesfully\n");
